@@ -1,22 +1,23 @@
+import type { Team } from "./team";
+
 export type VisualType = "Résultat" | "Classement" | "Affiche" | "Score en direct";
 
 export type TemplateFormat = "Post" | "Story";
 
+export type TemplateCreationStep = 1 | 2 | 3;
+
 export interface Template {
-  id: string;
-  user_id: string;
+  id: number;
   name: string;
-  json_template: object;
-  thumbnail: string | null;
-  visualType: string | null;
-  format: string | null;
-  team: object | null;
+  visualType: VisualType;
+  format: TemplateFormat;
+  team: Team | null;
   urlArrierePlan: string | null;
-  lastUsed: string | null;
+  thumbnail: string;
+  lastUsed?: string;
   created_at: string;
   updated_at: string;
 }
-
 
 export interface TemplateModele{
   id: number;
@@ -25,4 +26,10 @@ export interface TemplateModele{
   thumbnail: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface CreateTemplatePayload {
+  visualType: VisualType;
+  team: Team;
+  startFromScratch: boolean;
 }
