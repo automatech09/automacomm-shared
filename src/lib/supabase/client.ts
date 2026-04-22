@@ -1,15 +1,11 @@
 import { createBrowserClient } from '@supabase/ssr';
 
-export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-  );
+export function createSupabaseBrowserClient(url: string, key: string) {
+  return createBrowserClient(url, key);
 }
 
-export const supabase = createClient();
-
-export async function getCurrentUserId(): Promise<string> {
+// Helper optionnel si tu veux garder une fonction utilitaire
+export async function getCurrentUserId(supabase: ReturnType<typeof createBrowserClient>): Promise<string> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Utilisateur non connecté');
   return user.id;
